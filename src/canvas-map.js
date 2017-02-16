@@ -1,12 +1,12 @@
-import Component from './component';
-import { loadImage } from './image-loader';
-import createCanvas from './create-canvas';
-import get from './ajax';
-import * as Path from './path';
-import { mult, sub, add, applyToAll } from './vector';
-import { clamp, interpolate, easing } from './math2';
 import TweenLite from 'gsap';
-import hasClass from './has-class';
+
+import get from './ajax';
+import Component from './component';
+import createCanvas from './create-canvas';
+import { loadImage } from './image-loader';
+import * as Path from './path';
+import { clamp, interpolate, easing } from './math2';
+import { mult, sub, add } from './vector';
 
 let arrayNum = v => Array.from(Array(v));
 let getScroll = () => window.pageYOffset;
