@@ -1,3 +1,5 @@
+import { likeNull, isString, } from './utils';
+
 const isFunction = v => typeof v === 'function';
 const callIfFunction = (thisObj, f, ifNot = undefined) => {
   if (isFunction(f)) return f.call(thisObj);
@@ -5,7 +7,7 @@ const callIfFunction = (thisObj, f, ifNot = undefined) => {
   return ifNot;
 };
 
-const Component = (props = null) => {
+export default (props = null) => {
   const object = {
     _state: null,
     _props: null,
@@ -25,7 +27,7 @@ const Component = (props = null) => {
     },
 
     get state() {
-      if (this._state == null) this._state = callIfFunction(this, this.initialState, {});
+      if (likeNull(this._state)) this._state = callIfFunction(this, this.initialState, {});
       return this._state;
     },
 
@@ -40,7 +42,7 @@ const Component = (props = null) => {
     },
 
     get props() {
-      if (this._props == null) this._props = callIfFunction(this, this.defaultProps, {});
+      if (likeNull(this._props)) this._props = callIfFunction(this, this.defaultProps, {});
       if (this._setProps != null) this._props = Object.assign({}, this._props, this._setProps);
       return this._props;
     },
@@ -58,7 +60,7 @@ const Component = (props = null) => {
 
     appendTo(element) {
       let el;
-      if (typeof element === 'string') el = document.querySelector(element);
+      if (isString(element)) el = document.querySelector(element);
 
       this._container = el;
 
@@ -79,5 +81,3 @@ const Component = (props = null) => {
 
   return object;
 };
-
-export default Component;

@@ -3,9 +3,10 @@ import TweenLite from 'gsap';
 import get from './ajax';
 import Component from './component';
 import createCanvas from './create-canvas';
-import { loadImage, } from './image-loader';
+import loadImage from './image-loader';
 import * as Path from './path';
-import { clamp, interpolate, easing, } from './math2';
+import { clamp, interpolate, easing, } from './math';
+import { likeNull, isUndefined, isObject, } from './utils';
 import { mult, sub, add, } from './vector';
 
 const arrayNum = v => Array.from(Array(v));
@@ -137,13 +138,13 @@ const CanvasMap = (props) => {
       };
     },
     get trailColor() {
-      if (typeof this.props !== 'undefined') { if (this.props.trailColor != null) return this.props.trailColor; }
-      if (this.trailPath == null) return '#ccc';
+      if (!isUndefined(this.props)) { if (this.props.trailColor != null) return this.props.trailColor; }
+      if (likeNull(this.trailPath)) return '#ccc';
       return this.trailPath.getAttribute('stroke');
     },
     get trailWidth() {
-      if (typeof this.props !== 'undefined') { if (this.props.trailWidth != null) return this.props.trailColor; }
-      if (this.trailPath == null) return 2;
+      if (!isUndefined(this.props)) { if (this.props.trailWidth != null) return this.props.trailColor; }
+      if (likeNull(this.trailPath)) return 2;
       return parseFloat(this.trailPath.getAttribute('stroke-width') || 2);
     },
     init() {
@@ -181,7 +182,7 @@ const CanvasMap = (props) => {
               .childNodes
           ).filter((node) => {
             const tag = node.tagName;
-            if (typeof tag === 'undefined') return false;
+            if (isUndefined(tag)) return false;
             return tag.toLowerCase() == 'svg';
           })[0];
 
@@ -334,7 +335,7 @@ const CanvasMap = (props) => {
           if (isLast) return true;
 
           const nextSection = sections[i + 1];
-          const isBeforeNextTop = typeof nextSection !== 'undefined' ? scroll < nextSection.top : false;
+          const isBeforeNextTop = !isUndefined(nextSection) ? scroll < nextSection.top : false;
           const isBeforeCurBottom = scroll < curSection.bottom;
           return isBeforeCurBottom || isBeforeNextTop;
         }
@@ -439,7 +440,7 @@ const CanvasMap = (props) => {
 
       const getNumericAttr = (el, attr, def = 1) => {
         const v = el.getAttribute(attr);
-        return (v == null) ? def : parseFloat(v);
+        return likeNull(v) ? def : parseFloat(v);
       };
       const getMiddleZoom = section => getNumericAttr(section, 'data-zoom-middle', getStartZoom(section));
       let getStartZoom = section => getNumericAttr(section, 'data-zoom-start', 1);
@@ -596,11 +597,11 @@ const CanvasMap = (props) => {
 
       // sets a value if the point has been visited, is being visited, or hasnt been visited yet
       const setByStatus = (i, past, present, future = null) => {
-        if (future == null) future = past;
+        if (likeNull(future)) future = past;
         const point = this.points[i];
         const nextPoint = this.points[i + 1] || null;
         if (!isVisited(point)) return future;
-        if (nextPoint == null) return present;
+        if (likeNull(nextPoint)) return present;
         if (isVisited(nextPoint)) return past;
         return present;
       };
@@ -644,7 +645,7 @@ const CanvasMap = (props) => {
         this.points.forEach(drawLabel);
 
       const drawIcon = () => {
-        if (icon == null) return;
+        if (likeNull(icon)) return;
 
         const iconCenter = {
           x: icon.width / 2,
@@ -755,7 +756,7 @@ const CanvasMap = (props) => {
 
       const dpi = 1;// window.devicePixelRatio
 
-      let canvasPos = (x, y) => typeof x === 'object' ?
+      let canvasPos = (x, y) => isObject(x) ?
         canvasPos(x.x, x.y) : [
           (x - mapSlice.x) * zoom,
           (y - mapSlice.y) * zoom,

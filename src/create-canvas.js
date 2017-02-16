@@ -1,4 +1,4 @@
-export default function createCanvas(width, height, dpiAware = false) {
+export default (width, height, dpiAware = false) => {
   const canvas = document.createElement('canvas');
   let multiplier = 1;
   if (dpiAware) {
@@ -9,4 +9,4 @@ export default function createCanvas(width, height, dpiAware = false) {
   canvas.width = width * multiplier;
   canvas.height = height * multiplier;
   return canvas;
-}
+};

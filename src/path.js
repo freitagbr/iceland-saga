@@ -1,28 +1,27 @@
 import { sub, } from './vector';
-import { clamp, } from './math2';
+import { clamp, } from './math';
 
-export function getPointAtLength(path, length) {
+export const getPointAtLength = (path, length) => {
   const p = path.getPointAtLength(length);
   return { x: p.x, y: p.y, };
-}
-export function getLength(path) {
-  return path.getTotalLength();
-}
-export function getPointAtPercent(path, percent) {
-  return Array.isArray(path)
-    ? path[Math.round(clamp(percent) * (path.length - 1))]
-    : getPointAtLength(path, percent * getLength(path));
-}
+};
 
-function distance(pointA, pointB) {
+export const getLength = path => path.getTotalLength();
+
+export const getPointAtPercent = (path, percent) => (
+  Array.isArray(path)
+    ? path[Math.round(clamp(percent) * (path.length - 1))]
+    : getPointAtLength(path, percent * getLength(path))
+);
+
+const distance = (pointA, pointB) => {
   const d = sub(pointA, pointB);
   return Math.sqrt((d.x * d.x) + (d.y * d.y));
-}
+};
 
-export function getLengthAtPoint(path, point, subdivisionsPerIteration = 10, _iterations = 5) {
+export const getLengthAtPoint = (path, point, subdivisionsPerIteration = 10, _iterations = 5) => {
   const pathLength = getLength(path);
   let iterations = _iterations;
-
   return (function iterate(lower, upper) {
     const delta = upper - lower;
     const step = delta / (subdivisionsPerIteration - 1);
@@ -42,12 +41,14 @@ export function getLengthAtPoint(path, point, subdivisionsPerIteration = 10, _it
       .map(v => v.length)
       .slice(0, 2);
 
-    if (!--iterations) return subdivisions[0];
+    iterations -= 1;
+    if (!iterations) return subdivisions[0];
 
     return iterate(...subdivisions.sort((a, b) => a - b));
   }(0, pathLength));
-}
-export function subdividePath(path, _subdivisions, subdivideByDistance = false) {
+};
+
+export const subdividePath = (path, _subdivisions, subdivideByDistance = false) => {
   const length = getLength(path);
   let subdivisions = _subdivisions;
 
@@ -56,4 +57,4 @@ export function subdividePath(path, _subdivisions, subdivideByDistance = false) 
   const subdivisionLength = length / subdivisions;
   return Array.from(Array(Math.floor(subdivisions)))
     .map((cur, i) => getPointAtLength(path, i * subdivisionLength));
-}
+};

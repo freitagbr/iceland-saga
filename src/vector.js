@@ -1,60 +1,36 @@
 /* eslint-disable consistent-return */
 
-function objNum(op, obj, num) {
-  return Object.assign({},
-    ...Object.keys(obj).map((i) => {
-      const r = {};
-      r[i] = op(obj[i], num);
-      return r;
-    })
-  );
-}
-function objObj(op, objA, objB) {
-  const keysA = Object.keys(objA);
+import { isNumber, isObject, } from './utils';
 
-  return Object.assign({},
-    ...keysA.map((i) => {
-      const r = {};
-      r[i] = op(objA[i], objB[i]);
-      return r;
-    })
-  );
-}
+const objNum = (op, obj, num) => Object.assign({},
+  ...Object.keys(obj).map((i) => {
+    const r = {};
+    r[i] = op(obj[i], num);
+    return r;
+  })
+);
 
-const ops = {
-  add: (a, b) => a + b,
-  sub: (a, b) => a - b,
-  mult: (a, b) => a * b,
-  div: (a, b) => a / b,
+const objObj = (op, objA, objB) => Object.assign({},
+  ...Object.keys(objA).map((i) => {
+    const r = {};
+    r[i] = op(objA[i], objB[i]);
+    return r;
+  })
+);
+
+const opAdd = (a, b) => a + b;
+const opSub = (a, b) => a - b;
+const opMult = (a, b) => a * b;
+const opDiv = (a, b) => a / b;
+
+const doOpOn = (op, a, b) => {
+  if (typeof a === typeof b) {
+    if (isNumber(a)) return op(a, b);
+    if (isObject(a)) return objObj(op, a, b);
+  } else if (isObject(a)) return objNum(op, a, b);
 };
 
-function doOpOn(op, a, b) {
-  if (typeof a === typeof b) {
-    if (typeof a === 'number') return op(a, b);
-    if (typeof a === 'object') return objObj(op, a, b);
-  } else if (typeof a === 'object') return objNum(op, a, b);
-}
-
-export function applyToAll(f, obj) {
-  const newObj = Object.assign({}, obj);
-  newObj.forEach((i) => {
-    newObj[i] = f(newObj[i]);
-  });
-  return newObj;
-}
-
-export function mult(a, b) {
-  return doOpOn(ops.mult, a, b);
-}
-
-export function sub(a, b) {
-  return doOpOn(ops.sub, a, b);
-}
-
-export function add(a, b) {
-  return doOpOn(ops.add, a, b);
-}
-
-export function div(a, b) {
-  return doOpOn(ops.div, a, b);
-}
+export const mult = (a, b) => doOpOn(opMult, a, b);
+export const sub = (a, b) => doOpOn(opSub, a, b);
+export const add = (a, b) => doOpOn(opAdd, a, b);
+export const div = (a, b) => doOpOn(opDiv, a, b);
