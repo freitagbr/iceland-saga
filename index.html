@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Ferðast á Villtum Leið</title>
+	<meta name="description" content="An interactive journey where a Canvas map path is animated according to the content that is scrolled on the page. By Lucas Bebber." />
+	<meta name="keywords" content="svg map, animated, path, journey, story, article, canvas, images, plane, web design" />
+	<meta name="author" content="Lucas Bebber for Codrops" />
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class="main">
+		<header class="codrops-header">
+			<h1 class="header-title">
+				<span class="header-title__main">Ferðast á Villtum Leið</span>
+				<span class="header-title__part">An Icelandic Saga</span>
+				<span class="header-title__sub">An interactive storytelling experiment with Canvas.<br/>Based on the <a href="http://tympanus.net/codrops/2015/12/16/animated-map-path-for-interactive-storytelling/">Storytelling Map</a> by Lucas Bebber.</span>
+				<span class="header-title__sub">by <strong>Brandon Freitag</strong></span>
+			</h1>
+		</header>
+		<div class="intro">
+			<blockquote>
+				<em>“I feel<br>emotional landscapes<br>they puzzle me”</em>
+				<span>Björk</span>
+			</blockquote>
+		</div>
+		<div class="container">
+			<canvas width="1440" height="799" style="position: absolute; top: 0px; left: 0px;"></canvas>
+		</div>
+		<div class="text">
+		<section class="js-section" data-zoom-middle="2">
+			<h2>
+				<span class="title-up">Reykjavík</span>
+				<span class="title-down">The Arrival</span>
+			</h2>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5594/30587574182_b90057486a_b.jpg">
+				<img class="js-image" src="https://c6.staticflickr.com/6/5467/30616179261_485245e5b6_c.jpg">
+				<figcaption>Clouds over Greenland</figcaption>
+			</figure>
+			<p class="text-intro">We arrived in the early morning of a sunny June day.</p>
+			<p>On June 14, 2016, I left the cozy, sleepy comfort of Orange County to embark on a journey. I had set my sights on my destination for a long time, having admired its natural beauty, its varied scenery, and its eccentric culture. As soon as I was able, I bought my tickets, booked my hotels, and looked toward the future eagerly – I was going to Iceland.</p>
+			<p>When we arrived, the air was cool and crisp, a refreshing change from the hot and dry weather of Southern California. Though dreary from a red-eye flight, I could already feel the magic of the place. The landscape is unlike most places in the world: mostly untouched, ragged, and very volcanic. Fluorescent-green moss blankets fields of jagged volcanic rock, in a way that makes you feel like you're on another planet. But there are features that feel closer to home, like the Nordic charm of Reykjavík.</p>
+			<figure>
+				<img class="js-image" src="https://c3.staticflickr.com/6/5765/30404393850_b56cb241c5_c.jpg">
+				<img class="js-image" src="https://c4.staticflickr.com/6/5542/30616148011_a6e4a791e1_c.jpg">
+				<img class="js-image" src="https://c6.staticflickr.com/6/5641/30070273693_dc4983fa06_c.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5706/30072303304_498732060f_c.jpg">
+				<figcaption>The town's (and probably the world's) best hot dogs</figcaption>
+			</figure>
+			<p>We spent the first few days going to the music festival Secret Solstice 2016. The highlight of this was that we got to see Radiohead's first ever performance in Iceland, which was magical.</p>
+			<p>The Hallgrímskirkja is a spectacular church perched atop the tallest point in Reykjavík. We took an elevator to the top to get a better view of our home for the next few days.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5727/30617426791_70b29c3d44_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5664/30668788506_614a1b5e08_c.jpg">
+				<figcaption>A view from the top of the Hallgrímskirkja</figcaption>
+			</figure>
+			<figure>
+				<img class="js-image" src="https://c8.staticflickr.com/6/5466/30070133823_a4338dbf16_c.jpg">
+				<figcaption>The sun sets around midnight, and rises again shortly after</figcaption>
+			</figure>
+			<p>Reykjavík is such an eccentric city. It feels somewhat like a Californian beach-town, but in an unmistakably Scandinavian kind of way. I will never forget the authentic, homely and modest architecture, the whimsical and thought-provoking street art, the delicious hot dogs, and the friendly people. After a few days of acclimating, though, we headed off to experience the untamed Icelandic wilderness.</p>
+			<p>For the first stretch of the journey, we took what is known as the Golden Circle, a popular route that goes from Reykjavík to Þingvellir, Geysir, and Gullfoss, among other destinations.</p>
+		</section>
+		<section class="js-section" data-zoom-start="2">
+			<h2>
+				<span class="title-up">Þingvellir</span>
+				<span class="title-down">The Continental Divide</span>
+			</h2>
+			<p>Þingvellir is a national park northeast of Reykjavík. Here, the North American and Eurasian tectonic plates are drifting apart, and the effect is palpable – in fact, you can stand right inbetween them. The air is calm and quiet, in contrast to the giant, craggy cliffs that sit on either side of you. We ventured a ways through the canyon, navigating boulders, foliage, and interesting clumps of moss. Sensing impending rain in the air, we decided to head to the next destination.</p>
+			<figure>
+				<img class="js-image" src="https://c7.staticflickr.com/6/5773/30405591430_aeda3bf412_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5776/30668726936_53ccbb4593_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="3">
+			<h2>
+				<span class="title-up">Geysir</span>
+				<span class="title-down">The Great Gush</span>
+			</h2>
+			<p>Geysir is a geyser located not far from Þingvellir. Geysir is so prominent that the word "geyser" itself is derived from it. Unfortunately, Geysir no longer erupts frequently, and is awoken only by the occasional earthquake. However, Geysir has a few siblings, namely Strokkur, that do like to erupt quite frequently. We eagerly awaited several eruptions from Strokkur, which occurred every 10 minutes or so.</p>
+			<p>A bit chilly outside, we found comfort in the heat of the steam coming from the geothermal vents around the area. After retreating to the visitor center for a quick treat, we ventured off again.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5810/30071375323_7f4e3729f8_b.jpg">
+				<img class="js-image" src="https://c2.staticflickr.com/6/5518/30617139841_54d4b93ed9_z.jpg">
+				<img class="js-image" src="https://c7.staticflickr.com/6/5807/30073501374_352428ca34_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="3">
+			<h2>
+				<span class="title-up">Gullfoss</span>
+			</h2>
+			<p>A short drive from Geysir landed us at Gullfoss, one of the most iconic waterfalls in Iceland. Gullfoss in particular is remarkable, as it is stepped – after taking a short dive, the water plunges into a deep crevice, hurling a ton of mist into the air. You can walk down a path towards a rocky outcropping that puts you only inches from the water. Gullfoss is so forceful that you can feel the earth tremble under your boots.</p>
+			<p>After this adventure, we headed back to Reykjavík one last time before our trip around the country.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5468/30072186864_db94b0a707_z.jpg">
+				<img class="js-image" src="https://c8.staticflickr.com/6/5738/30070104023_6eba566576_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5556/30070096133_dd2018f659_b.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="1.2">
+			<h2>
+				<span class="title-up">Selfoss</span>
+			</h2>
+			<p>We didn't have time to stop in Selfoss. Whoops.</p>
+			<figure>
+				<img class="js-image" data-pos="0.8" src="https://c7.staticflickr.com/6/5544/30587282702_237047fae1_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-middle="1.5">
+			<h2>
+				<span class="title-up">Seljalandsfoss</span>
+			</h2>
+			<p>Seljalandsfoss is one of the most photogenic waterfalls in Iceland. What makes it unlike other waterfalls is that it pours over a small cave that you can walk into. From the cave, you can walk down to the shore behind the waterfall itself. Peering up, the water is falling from directly above you. It is truly a sight to behold.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5564/30587278362_46ed132b2f_b.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5642/30587218432_2b6f32502b_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5780/30615865611_b2447f6c1f_b.jpg">
+			</figure>
+			<p>We took a walk along the base of the cliff. There are several other small waterfalls that adorn the cliff, and we climbed to get a closer look.</p>
+			<figure>
+				<img class="js-image" data-pos="0.80" src="https://c1.staticflickr.com/6/5586/30703994345_43b3f9b30b_z.jpg">
+				<img class="js-image" data-pos="0.85" src="https://c1.staticflickr.com/6/5718/30704104685_d7162afea3_z.jpg">
+				<figcaption>The closest look we got at Eyjafjallajökull, the glacier-capped active volcano and veritable tongue-twister in the south of Iceland.</figcaption>
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="3">
+			<h2>
+				<span class="title-up">Skógafoss</span>
+			</h2>
+			<p>Skógafoss is another large waterfall located several kilometers from Seljalandsfoss. The force of water flowing down this waterfall is massive. It sprays a barrage of mist into the air at the bottom, preventing you from getting too close (unless you like cold showers). A trail extends up the right side of the waterfall, with a few outcroppings that you can climb on to get a better view. Climbing to the top gives you a sense of the tremendous amount of water falling down the waterfall.</p>
+			<p>There was a surprising amount of wildlife at Skógafoss. Sheep and horses grazed the hillsides, gulls drifted through the air before perching in nests alongside the waterfall.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5832/30405348250_f62bb33ff9_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5548/30069963613_9a3f8ed30a_z.jpg">
+				<figcaption>A troll-like feature on the edge of the cliff. There's even a small cave nearby.</figcaption>
+			</figure>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/3/2946/32031378103_6305770bdb_b.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2.5">
+			<h2>
+				<span class="title-up">Vík</span>
+				<span class="title-down">Black Sands</span>
+			</h2>
+			<p>At the southern tip of Iceland lies a small, cosy town by the name of Vík. Just west of Vík is a stretch of black sand and a small peninsula called Dyrhólaey. This is one of the most awe-inspiring places in Iceland. The Atlantic ocean batters the beach vigorously – huge waves crash, fierce winds blow, water wears away at the pitch-black volcanic rock. You can climb over some curiously-shaped basalt columns while gazing out at the ocean. In the distance stand two columns of black rock, Reynisfjara and Reynisdrangar, planted tenaciously in the ocean.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5554/30071916704_8daa433938_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5623/30614557261_6a3c71b901_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5790/30668432956_ba04b2d92c_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5541/30668302466_4b8dc90e82_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/3/2012/32846232785_46d588cbf8_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="1.2" data-zoom-middle="2.5">
+			<h2>
+				<span class="title-up">Fjaðrárgljúfur</span>
+			</h2>
+			<p>After spending a night in Vík at a wonderful cabin, we set off east towards the next leg of the adventure.</p>
+			<p>We stopped first at Fjaðrárgljúfur, a deep canyon in the southeast of Iceland. It is accessible by a gravel path that gave our poor rental quite a beating. A trail hugs the lip of the canyon for quite a long way. You can even travel the bed of the canyon by foot – the river that flows through it is fairly shallow. We caught a glimpse of a few travelers wading through the water, and another man with a fishing pole.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5713/30705125535_2aab8874ba_b.jpg">
+				<img class="js-image" data-pos="0.55" src="https://c1.staticflickr.com/6/5532/30069763003_87e05892c3_z.jpg">
+				<figcaption>Glacial flows form Vatnajökull</figcaption>
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2">
+			<h2>
+				<span class="title-up">Jökulsárlón</span>
+				<span class="title-down">The Glacier Lagoon</span>
+			</h2>
+			<p>We stopped next at one of the most unique locations in the world. Jökulsárlón is a lagoon at the edge of a flow from the Breiðamerkurjökull glacier. Icebergs break off of the glacier and float around in the lagoon. The air is incredibly cold and quiet, and the icebergs have a luminous blue tinge to them. Stunned by the sound of cracking ice, we witnessed an iceberg breaking in two, sending huge ripples along the smooth surface of the water.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5635/30666979336_3227faf1f7_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5518/30404906280_727e7cb24f_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5470/30073011744_5ec9e4fb7d_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/1/690/32804431826_bd38850aee_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2.5">
+			<h2>
+				<span class="title-up">Djúpivogur</span>
+			</h2>
+			<p>After the day's drive, we stopped in the cute fishing town of Djúpivogur for the night.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5645/30615503521_836960e936_z.jpg">
+				<img class="js-image" data-pos="0.15" src="https://c1.staticflickr.com/6/5695/30703716495_9202d465d6_b.jpg">
+				<img class="js-image" data-pos="0.4" src="https://c1.staticflickr.com/6/5767/30586822612_323d42faa2_z.jpg">
+				<img class="js-image" data-pos="0.6" src="https://c1.staticflickr.com/6/5627/30665920346_a0f7694ec7_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="1.8" data-zoom-middle="1.5">
+			<h2>
+				<span class="title-up">Seyðisfjörður</span>
+			</h2>
+			<p>We began the the journey the next day by visiting Seyðisfjörður, a fjord in the eastern region of Iceland. We ascended a mountain pass covered in snow, and then descended through thick fog. After taking a pit stop to check out Gufufoss, we arrived in the town proper.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5727/30615355511_4849f55465_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5658/30667850446_d33119c835_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5660/30070699823_e53c51a5c5_z.jpg">
+				<figcaption>A phone booth commemorates the first telegraph wire laid between Iceland and Scotland in the early 1900s.</figcaption>
+			</figure>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5657/30666633556_8efb69b1c9_z.jpg">
+				<img class="js-image" data-pos="0.1" src="https://c1.staticflickr.com/6/5654/30069340113_59b8ce91ce_z.jpg">
+				<figcaption>A grand view of Austurland from the top of the mountain pass.</figcaption>
+			</figure>
+			<figure>
+				<img class="js-image" data-pos="0.60" src="https://c1.staticflickr.com/6/5518/30615210661_30bbb240c3_z.jpg">
+				<img class="js-image" data-pos="0.65" src="https://c1.staticflickr.com/6/5630/30403304560_481ff2669f_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2.5">
+			<h2>
+				<span class="title-up">Dettifoss</span>
+			</h2>
+			<p>After diverging from the main road down a gravel road, we reached a natural wonder. Dettifoss is the most powerful waterfall in Europe, fed by water from the Vatnajökull glacier. The water is a greyish-brown, filled with sediment that gives it a primal look. The waterfall can be viewed from either side of the river, though both sides are unique. The eastern side is rocky and jagged, whereas the western side is lush and mossy. There are no guardrails here – you can walk up right the the edge of the water. The sheer size of the drop and the volume of water flowing are breathtaking.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5348/30070627153_d204cb0011_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5564/30667817066_0db09b59fb_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5784/30667795696_7d83ce79eb_b.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="3">
+			<h2>
+				<span class="title-up">Mývatn</span>
+			</h2>
+			<p>We continued our journey by driving around the lake of Mývatn. There are many geothermal vents in the surrounding area, and you can smell sulfur in the air. The lake itself is picturesque, and is home to a variety of wildlife.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5458/30403259940_e0ae1dca4b_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5649/30703393695_57fb8d7601_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2.5">
+			<h2>
+				<span class="title-up">Goðafoss</span>
+				<span class="title-down">The Majesty</span>
+			</h2>
+			<p>We closed out the day with something special. Goðafoss is perhaps the most majestic of all the waterfalls in Iceland. The cresent-shaped cliff gives rise to several falls. The water is a spectacular teal-blue hue, almost pearlescent, reminiscent of the blue tinge of the icebergs in Jökulsárlón. We walked down to the shore of the river, and hiked around. After dipping our fingers in, we found the water to be very brisk. The area surrounding the waterfall is easily navigable on foot, which gave us all the more reason to explore.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5619/30665941076_0814ff592c_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5795/30402994710_553c4254d5_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5739/30403015010_fcd38f22aa_z.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5748/30616260991_baa85c9b19_z.jpg">
+				<figcaption>Goðafoss emits mist subtly, giving a glimpse of rainbows.</figcaption>
+			</figure>
+			<figure>
+				<img class="js-image" data-pos="0.4" src="https://c1.staticflickr.com/6/5672/30586363202_9d3b86fb21_z.jpg">
+				<img class="js-image" data-pos="0.75" src="https://c1.staticflickr.com/6/5508/30704624595_9b08508057_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="3" data-zoom-middle="1.5">
+			<h2>
+				<span class="title-up">Akureyri</span>
+			</h2>
+			<p>To conclude the long day, we holed up in Akureyri, the city of the north. The second most populous city in Iceland, it has its own kind of vibe. Despite being in the north, the climate in Akureyri is very moderate. You can wear a t-shirt comfortably during the day, and the water in the bay feels warmer than the water at Californian beaches (though I probably wouldn't swim in it).</p>
+			<p>The next day, we took it easy and strolled around, and, of course, got some hot dogs. The neighborhoods are cute and quiet, some homes hosting summer barbeques in the backyard, some small cats scurrying about.</p>
+			<p>Above Akureyrarkirkja, Akureyri's church, is a small bird sanctuary, that was home to many birds when we visited. A goose gave me a mean look. Further up the hill is a cute and tidy botanical garden, where many non-native yet still-flourishing species grow.</p>
+			<p>The day ended far too early, but we nonetheless rested up for the last leg of the journey.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5527/30615139341_1519ec995c_b.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5602/30703370565_3222a4b1f0_b.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5653/30666154276_870ae0f720_b.jpg">
+				<img class="js-image" src="https://c1.staticflickr.com/6/5471/30068902653_a58afb63fd_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2" data-zoom-middle="1">
+			<h2>
+				<span class="title-up">Hvítserkur</span>
+			</h2>
+			<p>Our first stop on the last part of the journey was a peculiar one. Hvítserkur is a lone piece of oddly shaped basalt offshore. The interesting part is that you cannot see it from the road as you drive up to the site. In fact, you can't see it until you're at at the very edge of the cliff looking down. To get a better view, we decided to head down to the shore. It took courage and surefootedness to descend the steep bank of the cliff, but once at the shoreline, its size and stance became much more impressive.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5552/30070959694_2020cdeb73_z.jpg">
+			</figure>
+		</section>
+		<section class="js-section" data-zoom-start="2" data-zoom-middle="1">
+			<h2>
+				<span class="title-up">Kirkjufell</span>
+			</h2>
+			<p>The final stop on our journey was the oft-pictured and memorably shaped mountian of Kirkjufell. Our visit to this place was soured a little bit by fog, but I barely managed to capture a photo of the peek poking through the mist.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5510/30702951515_08c3f6e689_b.jpg">
+			</figure>
+			<p>In the end, we made it back to Reykjavík, where we spent our last few days of an amazing trip.</p>
+		</section>
+		<section class="js-section" data-zoom-start="1.8">
+			<h2>
+				<span class="title-up">Blue Lagoon</span>
+			</h2>
+			<p>We concluded our stay by visiting the Blue Lagoon the night before our flight. No trip to Iceland can be taken without visiting the waters of the Blue Lagoon. Entirely accidentally man-made, the milky blue waters in the lagoon are warm and salty. A visit here is a full-fledged spa experience.</p>
+			<figure>
+				<img class="js-image" src="https://c1.staticflickr.com/6/5644/30068719693_1cf8457145_z.jpg">
+			</figure>
+			<p>After arriving and checking, the daunting task of showering naked with many other people (of the same sex) hovered over me. After overcoming that, I waddled outside into the cold, misty air, a shallow ramp into the milky blue soup before me. Being cold outside, I took no time jetting into the water.</p>
+			<p>The water was the warmest and most comfortable feeling I've ever physically felt. Wading slowly over to the masking booth, my girlfriend and I slowy applied the mud mask to each others faces. The mask felt really funny, and I couldn't help but smile the entire time I had it on. When we were done, we dipped our faces in the water, and the masks washed off.</p>
+			<p>We then waded over to the drink booth, were we gathered some libations. We spent a bit of time after this wandering around and enjoying ourselves. Before we knew it, it was time to head back, so we quickly waddled back to the locker rooms and cleaned up. On the way back to Reykjavík, I gandered back towards the lagoon, lips still salty from the water there.</p>
+			<p>Early the next morning, we gathered our bags and headed off towards the airport, where we would catch our flight back to the States.</p>
+		</section>
+		</div>
+		<!-- Related demos -->
+		<section class="content content--related">
+			<h3>Acknowledgements</h3>
+			<p class="acknowledgements">
+				Björk, whose music inspired me and piqued my interest in Iceland.
+				<br>
+				My friend Alex, who taught me about Iceland, and convinced me to go.
+				<br>
+				My girlfriend Cynthia, who went with me, helped plan the trip, and helped me press the button.
+				<br>
+				My grandma, who also went with me, and who supported many parts of the trip.
+				<br>
+				Lucas Bebber, who designed and created the project that this website is based on.
+				<br>
+				My friends Christine and Geza, who drove us to the airport.
+				<br>
+				My mom and my sister, who picked us up from the airport.
+			</p>
+			<p><strong>Other ways I documented this saga:</strong></p>
+			<a class="media-item" href="https://www.flickr.com/photos/93772375@N07/sets/72157676664491624">
+				<img class="media-item__img" src="img/related/ArticleIntroEffects.png">
+				<h3 class="media-item__title">Flickr Gallery</h3>
+			</a>
+			<a class="media-item" href="http://tympanus.net/Development/SlidingHeaderLayout/">
+				<img class="media-item__img" src="img/related/SlidingHeaderLayout.jpg">
+				<h3 class="media-item__title">YouTube Video</h3>
+			</a>
+		</section>
+	</div>
+	<script src="../dist/app.js"></script>
+</body>
+</html>

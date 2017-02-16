@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-confusing-arrow": ["error", { "allowParens": true }]
+  }
+}
