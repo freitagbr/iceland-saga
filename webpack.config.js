@@ -1,20 +1,22 @@
+const path = require('path');
+
 module.exports = {
-  context: __dirname + "/src",
-  entry: "./index",
+  context: path.join(__dirname, '/src'),
+  entry: './index',
   output: {
-    filename: "app.js",
-    path: __dirname + "/dist"
+    filename: 'app.js',
+    path: path.join(__dirname, '/dist'),
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015']
-        }
-      }
-    ]
-  }
-}
+          presets: ['es2015'],
+        },
+      },
+    ],
+  },
+};
