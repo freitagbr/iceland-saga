@@ -15,7 +15,7 @@ export function interpolate(_v, min, max, f = null) {
   let v = _v;
   let op = f;
   if (f == null) {
-    op = (x) => x;
+    op = x => x;
   }
   v = op(v);
   const delta = max - min;
@@ -26,7 +26,7 @@ export const easing = {
   quad: {
     in: v => v * v,
     out: v => -1 * v * (v - 2),
-    inOut: _v => {
+    inOut: (_v) => {
       let v = _v;
       v /= 0.5;
       if (v < 1) return 0.5 * v * v;
@@ -35,7 +35,7 @@ export const easing = {
     },
   },
   cubic: {
-    inOut: _v => {
+    inOut: (_v) => {
       let v = _v;
       v /= 0.5;
       if (v < 1) return 0.5 * v * v * v;

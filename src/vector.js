@@ -32,14 +32,12 @@ function doOpOn(op, a, b) {
   if (typeof a === typeof b) {
     if (typeof a === 'number') return op(a, b);
     if (typeof a === 'object') return objObj(op, a, b);
-  } else {
-    if (typeof a === 'object') return objNum(op, a, b);
-  }
+  } else if (typeof a === 'object') return objNum(op, a, b);
 }
 
 export function applyToAll(f, obj) {
   const newObj = Object.assign({}, obj);
-  newObj.forEach(i => {
+  newObj.forEach((i) => {
     newObj[i] = f(newObj[i]);
   });
   return newObj;

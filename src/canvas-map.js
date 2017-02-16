@@ -3,30 +3,29 @@ import TweenLite from 'gsap';
 import get from './ajax';
 import Component from './component';
 import createCanvas from './create-canvas';
-import { loadImage } from './image-loader';
+import { loadImage, } from './image-loader';
 import * as Path from './path';
-import { clamp, interpolate, easing } from './math2';
-import { mult, sub, add } from './vector';
+import { clamp, interpolate, easing, } from './math2';
+import { mult, sub, add, } from './vector';
 
-let arrayNum = v => Array.from(Array(v));
-let getScroll = () => window.pageYOffset;
-let setCompositeOperation = (ctx, mode = 'source-over', fallback = null) => {
+const arrayNum = v => Array.from(Array(v));
+const getScroll = () => window.pageYOffset;
+const setCompositeOperation = (ctx, mode = 'source-over', fallback = null) => {
   ctx.globalCompositeOperation = mode;
-  let worked = (ctx.globalCompositeOperation == mode);
-  if (!worked && fallback != null)
-    ctx.globalCompositeOperation = fallback;
+  const worked = (ctx.globalCompositeOperation == mode);
+  if (!worked && fallback != null) { ctx.globalCompositeOperation = fallback; }
   return worked;
 };
-let drawCanvasSlice = (ctx, img, slice, target) => {
-  let sliceScale = {
+const drawCanvasSlice = (ctx, img, slice, target) => {
+  const sliceScale = {
     x: img.width / slice.width,
     y: img.height / slice.height,
   };
-  let targetSize = {
+  const targetSize = {
     width: target.width * sliceScale.x,
     height: target.height * sliceScale.y,
   };
-  let targetScale = {
+  const targetScale = {
     x: targetSize.width / img.width,
     y: targetSize.height / img.height,
   };
@@ -41,7 +40,7 @@ let drawCanvasSlice = (ctx, img, slice, target) => {
 };
 
 const CanvasMap = (props) => {
-  let object = {
+  const object = {
     ready: false,
 
     canvas: null,
@@ -55,7 +54,7 @@ const CanvasMap = (props) => {
     mapBuffer: null,
     mapBufferCtx: null,
     mapBufferScale: 0,
-    mapBufferSize: { x: 2048, y: 2048 },
+    mapBufferSize: { x: 2048, y: 2048, },
     mapBufferMargin: 400,
     mapBufferOffset: null,
     mapBufferLast: null,
@@ -121,7 +120,7 @@ const CanvasMap = (props) => {
 
         trailColor: null,
         trailWidth: null,
-        trailDash: [2, 4],
+        trailDash: [2, 4, ],
         trailVisitedColor: '#8EC641',
         trailVisitedWidth: 4,
 
@@ -138,20 +137,18 @@ const CanvasMap = (props) => {
       };
     },
     get trailColor() {
-      if (typeof this.props != 'undefined')
-        if (this.props.trailColor != null) return this.props.trailColor;
+      if (typeof this.props !== 'undefined') { if (this.props.trailColor != null) return this.props.trailColor; }
       if (this.trailPath == null) return '#ccc';
       return this.trailPath.getAttribute('stroke');
     },
     get trailWidth() {
-      if (typeof this.props != 'undefined')
-        if (this.props.trailWidth != null) return this.props.trailColor;
+      if (typeof this.props !== 'undefined') { if (this.props.trailWidth != null) return this.props.trailColor; }
       if (this.trailPath == null) return 2;
       return parseFloat(this.trailPath.getAttribute('stroke-width') || 2);
     },
     init() {
-      let width = window.innerWidth;
-      let height = window.innerHeight;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
       this.state = {
         width,
         height,
@@ -161,30 +158,30 @@ const CanvasMap = (props) => {
       this.canvas.style.position = 'absolute';
       this.canvas.style.top = 0;
       this.canvas.style.left = 0;
-      this.ctx = this.canvas.getContext('2d', { alpha: false });
+      this.ctx = this.canvas.getContext('2d', { alpha: false, });
       this.ctx.fillStyle = '#fff';
       this.ctx.fillRect(0, 0, this.state.width, this.state.height);
       this.container.appendChild(this.canvas);
 
       this.calculateSections();
       Array.from(this.props.textContainer.querySelectorAll('img'))
-        .forEach(img => {
+        .forEach((img) => {
           img.addEventListener('load', (event) => {
             this.calculateSections();
             this.renderMap();
           });
         });
 
-      this.scrollAnim = { value: 0 };
+      this.scrollAnim = { value: 0, };
 
       get(this.props.mapSrc).then((response) => {
         this.mapSVG = Array.from(
             new DOMParser()
               .parseFromString(response, 'image/svg+xml')
               .childNodes
-          ).filter(node => {
-            let tag = node.tagName;
-            if (typeof tag == 'undefined') return false;
+          ).filter((node) => {
+            const tag = node.tagName;
+            if (typeof tag === 'undefined') return false;
             return tag.toLowerCase() == 'svg';
           })[0];
 
@@ -192,14 +189,15 @@ const CanvasMap = (props) => {
         this.trailPath = this.mapSVG.querySelector('#trail-path path');
 
         this.points = Array.from(this.mapSVG.querySelectorAll('#points circle'))
-          .map(point => {
-            let [x, y] = [
+          .map((point) => {
+            const [x, y, ] = [
               parseFloat(point.getAttribute('cx')),
               parseFloat(point.getAttribute('cy')),
             ];
             return {
-              x, y,
-              length: Path.getLengthAtPoint(this.trailPath, { x, y }),
+              x,
+              y,
+              length: Path.getLengthAtPoint(this.trailPath, { x, y, }),
               label: (point.getAttribute('id') || '').replace(/_/g, ' '),
               color: point.getAttribute('fill') || 'black',
               radius: parseFloat(point.getAttribute('r')),
@@ -224,22 +222,22 @@ const CanvasMap = (props) => {
             this.mapHeight = 1178;
           }
           this.map = arrayNum(this.mapScales).map((v, i) => {
-            let scale = 1 + (((this.mapMaxScale - 1) / (this.mapScales - 1)) * i);
+            const scale = 1 + (((this.mapMaxScale - 1) / (this.mapScales - 1)) * i);
 
-            let map = createCanvas(this.mapWidth * scale, this.mapHeight * scale);
-            let mapCtx = map.getContext('2d', { alpha: false });
+            const map = createCanvas(this.mapWidth * scale, this.mapHeight * scale);
+            const mapCtx = map.getContext('2d', { alpha: false, });
             mapCtx.fillStyle = 'white';
             mapCtx.fillRect(0, 0, this.mapWidth * scale, this.mapHeight * scale);
             mapCtx.drawImage(img, 0, 0, this.mapWidth * scale, this.mapHeight * scale);
-            return { map, scale };
+            return { map, scale, };
           });
 
           this.mapBuffer = createCanvas(1, 1);
-          this.mapBufferCtx = this.mapBuffer.getContext('2d', { alpha: false });
+          this.mapBufferCtx = this.mapBuffer.getContext('2d', { alpha: false, });
           this.updateMapBufferSize();
           this.mapBufferCtx.fillStyle = 'white';
           this.mapBufferCtx.fillRect(0, 0, this.mapBufferSize.x, this.mapBufferSize.y);
-          this.mapBufferOffset = { x: 0, y: 0 };
+          this.mapBufferOffset = { x: 0, y: 0, };
           this.mapBufferScale = this.mapScale;
 
           this.ready = true;
@@ -252,7 +250,7 @@ const CanvasMap = (props) => {
     setupBreakpoints(path) {
       return this.points.map(point => Path.getLengthAtPoint(path, point))
         .map((point, i) =>
-          this.sections[i].getAttribute('data-stay') == 'true' ? [point, point] : [point]
+          this.sections[i].getAttribute('data-stay') == 'true' ? [point, point, ] : [point, ]
         )
         .reduce((flattened, cur) => flattened.concat(cur), []);
     },
@@ -270,14 +268,14 @@ const CanvasMap = (props) => {
 
       this.mapBufferLast = {
         zoom: -1,
-        pos: { x: -1, y: -1 },
+        pos: { x: -1, y: -1, },
       };
     },
     calculateSections() {
-      let scroll = getScroll();
+      const scroll = getScroll();
       this.sections = Array.from(this.props.textContainer.querySelectorAll('.js-section'));
-      this.sectionsBounds = this.sections.map(section => {
-        let bounds = section.getBoundingClientRect();
+      this.sectionsBounds = this.sections.map((section) => {
+        const bounds = section.getBoundingClientRect();
         return {
           top: bounds.top + scroll,
           bottom: bounds.bottom + scroll,
@@ -287,10 +285,10 @@ const CanvasMap = (props) => {
           width: bounds.width,
         };
       });
-      this.sectionsIcons = this.sections.map(section => {
-        let icon = section.getAttribute('data-icon');
+      this.sectionsIcons = this.sections.map((section) => {
+        const icon = section.getAttribute('data-icon');
         if (icon != null) {
-          let iconImg = document.createElement('img');
+          const iconImg = document.createElement('img');
           iconImg.setAttribute('src', icon);
           return iconImg;
         }
@@ -298,8 +296,8 @@ const CanvasMap = (props) => {
       });
 
       this.imagesBounds = this.sections.map(section =>
-        Array.from(section.querySelectorAll('.js-image')).map(image => {
-          let bounds = image.getBoundingClientRect();
+        Array.from(section.querySelectorAll('.js-image')).map((image) => {
+          const bounds = image.getBoundingClientRect();
           return {
             top: bounds.top + scroll,
             bottom: bounds.bottom + scroll,
@@ -312,7 +310,7 @@ const CanvasMap = (props) => {
       );
     },
     onScroll() {
-      let scroll = getScroll();
+      const scroll = getScroll();
       let t = 0;
       let d = Math.abs(scroll - this.lastScroll);
       d = Math.sqrt(clamp(d / 10));
@@ -330,29 +328,29 @@ const CanvasMap = (props) => {
     },
 
     updateScroll(scroll) {
-      let sectionIndex = this.sectionsBounds.findIndex(
+      const sectionIndex = this.sectionsBounds.findIndex(
         (curSection, i, sections) => {
-          let isLast = i == sections.length - 1;
+          const isLast = i == sections.length - 1;
           if (isLast) return true;
 
-          let nextSection = sections[i + 1];
-          let isBeforeNextTop = typeof nextSection != 'undefined' ? scroll < nextSection.top : false;
-          let isBeforeCurBottom = scroll < curSection.bottom;
+          const nextSection = sections[i + 1];
+          const isBeforeNextTop = typeof nextSection !== 'undefined' ? scroll < nextSection.top : false;
+          const isBeforeCurBottom = scroll < curSection.bottom;
           return isBeforeCurBottom || isBeforeNextTop;
         }
       );
 
-      let sectionBounds = this.sectionsBounds[sectionIndex];
-      let section = this.sections[sectionIndex];
-      let pos = clamp((scroll - sectionBounds.top) / sectionBounds.height, 0, 1);
+      const sectionBounds = this.sectionsBounds[sectionIndex];
+      const section = this.sections[sectionIndex];
+      const pos = clamp((scroll - sectionBounds.top) / sectionBounds.height, 0, 1);
 
-      let cameraSegment = {
+      const cameraSegment = {
         start: this.cameraBreakpoints[sectionIndex],
         end: this.cameraBreakpoints[clamp(sectionIndex + 1, this.cameraBreakpoints.length - 1)],
       };
       cameraSegment.length = cameraSegment.end - cameraSegment.start;
 
-      let trailSegment = {
+      const trailSegment = {
         start: this.trailBreakpoints[sectionIndex],
         end: this.trailBreakpoints[clamp(sectionIndex + 1, this.trailBreakpoints.length - 1)],
       };
@@ -388,17 +386,17 @@ const CanvasMap = (props) => {
       while (zoom > this.map[mapIndex].scale && mapIndex < this.map.length - 1) {
         mapIndex++;
       }
-      let map = this.map[mapIndex];
+      const map = this.map[mapIndex];
 
-      let offset = sub(mult(pos, map.scale), this.mapBufferMargin);
-      let scale = map.scale / zoom;
+      const offset = sub(mult(pos, map.scale), this.mapBufferMargin);
+      const scale = map.scale / zoom;
 
       drawCanvasSlice(
         ctx, map.map,
-        Object.assign({}, offset, { width: this.mapBufferSize.x * scale, height: this.mapBufferSize.y * scale }),
-        { x: 0, y: 0, width: this.mapBufferSize.x, height: this.mapBufferSize.y }
+        Object.assign({}, offset, { width: this.mapBufferSize.x * scale, height: this.mapBufferSize.y * scale, }),
+        { x: 0, y: 0, width: this.mapBufferSize.x, height: this.mapBufferSize.y, }
       );
-      return { offset, scale, mapScale: map.scale };
+      return { offset, scale, mapScale: map.scale, };
     },
     getCameraPosAtPercent(percent) {
       return Path.getPointAtPercent(
@@ -409,13 +407,13 @@ const CanvasMap = (props) => {
     getMapSliceAtPercent(percent) {
       // quick fix bug #20
       if (isNaN(percent)) percent = 1;
-      let cameraPos = this.getCameraPosAtPercent(percent);
-      let zoom = this.getZoomAtPercent(percent);
-      let [width, height] = [
+      const cameraPos = this.getCameraPosAtPercent(percent);
+      const zoom = this.getZoomAtPercent(percent);
+      const [width, height, ] = [
         this.state.width / zoom,
         this.state.height / zoom,
       ];
-      let center = {
+      const center = {
         x: this.state.width > 720 ? 0.66 : 0.5,
         y: 0.33,
       };
@@ -432,22 +430,22 @@ const CanvasMap = (props) => {
       return this.state.pos;
     },
     getZoomAtPercent(percent) {
-      let sectionIndex = this.state.sectionIndex;
-      let pos = this.getPosAtPercent();
+      const sectionIndex = this.state.sectionIndex;
+      const pos = this.getPosAtPercent();
 
-      let section = this.sections[sectionIndex];
-      let nextSection = this.sections[clamp(sectionIndex + 1, this.sections.length - 1)];
-      let lastSection = this.sections[clamp(sectionIndex - 1, 0, this.sections.length - 1)];
+      const section = this.sections[sectionIndex];
+      const nextSection = this.sections[clamp(sectionIndex + 1, this.sections.length - 1)];
+      const lastSection = this.sections[clamp(sectionIndex - 1, 0, this.sections.length - 1)];
 
-      let getNumericAttr = (el, attr, def = 1) => {
-        let v = el.getAttribute(attr);
+      const getNumericAttr = (el, attr, def = 1) => {
+        const v = el.getAttribute(attr);
         return (v == null) ? def : parseFloat(v);
       };
-      let getMiddleZoom = (section) => getNumericAttr(section, 'data-zoom-middle', getStartZoom(section));
-      let getStartZoom = (section) => getNumericAttr(section, 'data-zoom-start', 1);
+      const getMiddleZoom = section => getNumericAttr(section, 'data-zoom-middle', getStartZoom(section));
+      let getStartZoom = section => getNumericAttr(section, 'data-zoom-start', 1);
 
-      let zoom1 = pos <= 0.5 ? getStartZoom(section) : getMiddleZoom(section);
-      let zoom2 = pos <= 0.5 ? getMiddleZoom(section) : getStartZoom(nextSection);
+      const zoom1 = pos <= 0.5 ? getStartZoom(section) : getMiddleZoom(section);
+      const zoom2 = pos <= 0.5 ? getMiddleZoom(section) : getStartZoom(nextSection);
 
       return interpolate(
         pos == 1 ? 1 : ((pos / 0.5) - Math.floor(pos / 0.5)),
@@ -459,10 +457,10 @@ const CanvasMap = (props) => {
     renderMap() {
       if (!this.ready) return;
 
-      let drawImagePointer = (image) => {
-        let scroll = getScroll();
+      const drawImagePointer = (image) => {
+        const scroll = getScroll();
 
-        let imageMapPos = Path.getPointAtPercent(
+        const imageMapPos = Path.getPointAtPercent(
           this.trailSubdivisions,
           interpolate(
             image.mapPos,
@@ -471,9 +469,9 @@ const CanvasMap = (props) => {
           ) / this.trailLength
         );
 
-        let halfWindowHeight = window.innerHeight / 2;
-        let falloff = halfWindowHeight * 1.2;
-        let imageMiddle = image.top + (image.height / 2) - scroll;
+        const halfWindowHeight = window.innerHeight / 2;
+        const falloff = halfWindowHeight * 1.2;
+        const imageMiddle = image.top + (image.height / 2) - scroll;
         let imageVisibility = (
           falloff - Math.abs(halfWindowHeight - imageMiddle)
         ) / falloff;
@@ -488,29 +486,29 @@ const CanvasMap = (props) => {
           y: origin[1],
         };
 
-        let transformCoords = (x, y) => [x, y];
-        let drawTriangle = (corner1, corner2) => {
+        const transformCoords = (x, y) => [x, y, ];
+        const drawTriangle = (corner1, corner2) => {
           corner1 = transformCoords(...corner1);
           corner2 = transformCoords(...corner2);
 
-          let getAngle = (x, y) =>
+          const getAngle = (x, y) =>
             Math.atan2(y - origin.y, x - origin.x);
 
           const PI = Math.PI;
           const PI2 = PI * 2;
-          let angle1 = getAngle(...corner1) + PI2;
-          let angle2 = getAngle(...corner2) + PI2;
-          let angleDelta = Math.atan2(Math.sin(angle1 - angle2), Math.cos(angle1 - angle2));
-          let angleMiddle = angle1 - (angleDelta / 2);
+          const angle1 = getAngle(...corner1) + PI2;
+          const angle2 = getAngle(...corner2) + PI2;
+          const angleDelta = Math.atan2(Math.sin(angle1 - angle2), Math.cos(angle1 - angle2));
+          const angleMiddle = angle1 - (angleDelta / 2);
 
-          let radius = 2 * imageVisibility;
+          const radius = 2 * imageVisibility;
 
-          let angleOrigin = angleMiddle + (PI / 2);
-          let originOffset = {
+          const angleOrigin = angleMiddle + (PI / 2);
+          const originOffset = {
             x: (radius + 1) * Math.cos(angleOrigin),
             y: (radius + 1) * Math.sin(angleOrigin),
           };
-          let colorValue = imageVisibility * 0.3;
+          const colorValue = imageVisibility * 0.3;
           this.ctx.fillStyle = `rgba(220,220,202,${colorValue})`;
           setCompositeOperation(this.ctx, 'darken', 'source-over');
 
@@ -538,17 +536,17 @@ const CanvasMap = (props) => {
           setCompositeOperation(this.ctx);
 
           this.ctx.fillStyle = '#405b54';
-          let imagePointRadius = 4 * imageVisibility;
+          const imagePointRadius = 4 * imageVisibility;
           this.ctx.beginPath();
           this.ctx.arc(origin.x, origin.y, imagePointRadius, 0, PI2);
           this.ctx.fill();
         };
 
-        let corner1 = [
+        const corner1 = [
           image.top - scroll < origin.y ? image.right : image.left,
           image.top - scroll,
         ];
-        let corner2 = [
+        const corner2 = [
           image.bottom - scroll < origin.y ? image.left : image.right,
           image.right < origin.x ? image.bottom - scroll : image.top - scroll,
         ];
@@ -557,20 +555,19 @@ const CanvasMap = (props) => {
           corner1,
           corner2
         );
-
       };
 
-      let drawImagePointers = () => {
+      const drawImagePointers = () => {
         this.imagesBounds[this.state.sectionIndex].forEach(drawImagePointer);
       };
 
-      let drawSubdividedPath = (path, interval = 1, end = -1) => {
+      const drawSubdividedPath = (path, interval = 1, end = -1) => {
         this.ctx.beginPath();
         this.ctx.moveTo(...canvasPos(path[0]));
         let brokenPath = false;
         for (let i = 1; i < (end == -1 ? path.length : clamp(end, path.length)); i += interval) {
-          let f = brokenPath ? this.ctx.moveTo : this.ctx.lineTo;
-          let p = canvasPos(path[i]);
+          const f = brokenPath ? this.ctx.moveTo : this.ctx.lineTo;
+          const p = canvasPos(path[i]);
           if (p[0] >= 0 && p[1] >= 0 && p[0] < this.state.width && p[1] < this.state.height) {
             brokenPath = false;
             f.call(this.ctx, ...p);
@@ -581,7 +578,7 @@ const CanvasMap = (props) => {
         this.ctx.stroke();
       };
 
-      let drawTrail = () => {
+      const drawTrail = () => {
         this.ctx.lineWidth = this.trailWidth;
         this.ctx.strokeStyle = this.trailColor;
         this.ctx.lineCap = 'round';
@@ -595,20 +592,20 @@ const CanvasMap = (props) => {
         drawSubdividedPath(this.trailSubdivisions, 2, trailTipIndex);
       };
 
-      let isVisited = (point) => trailPos >= point.length;
+      const isVisited = point => trailPos >= point.length;
 
       // sets a value if the point has been visited, is being visited, or hasnt been visited yet
-      let setByStatus = (i, past, present, future = null) => {
+      const setByStatus = (i, past, present, future = null) => {
         if (future == null) future = past;
-        let point = this.points[i];
-        let nextPoint = this.points[i + 1] || null;
+        const point = this.points[i];
+        const nextPoint = this.points[i + 1] || null;
         if (!isVisited(point)) return future;
         if (nextPoint == null) return present;
         if (isVisited(nextPoint)) return past;
         return present;
       };
 
-      let drawPoint = (point, i) => {
+      const drawPoint = (point, i) => {
         this.ctx.fillStyle = setByStatus(i,
           this.props.pointPastColor || point.color,
           this.props.pointPresentColor || point.color,
@@ -623,11 +620,11 @@ const CanvasMap = (props) => {
         this.ctx.fill();
       };
 
-      let drawPoints = () =>
+      const drawPoints = () =>
         this.points.forEach(drawPoint);
 
-      let drawLabel = (point, i) => {
-        let fontSize = 15;
+      const drawLabel = (point, i) => {
+        const fontSize = 15;
         this.ctx.font = `${setByStatus(i, 'normal', 'bold')} ${(setByStatus(i, fontSize, fontSize * 1.2))}px Arial`;
         this.ctx.textAlign = 'left';
         this.ctx.textBaseline = 'middle';
@@ -638,22 +635,22 @@ const CanvasMap = (props) => {
         );
         this.ctx.strokeStyle = '#FDFCEC';
         this.ctx.lineWidth = 6;
-        let pos = add(point, { x: 20 * inverseZoom, y: 0 });
+        const pos = add(point, { x: 20 * inverseZoom, y: 0, });
         this.ctx.strokeText(point.label, ...canvasPos(pos));
         this.ctx.fillText(point.label, ...canvasPos(pos));
       };
 
-      let drawLabels = () =>
+      const drawLabels = () =>
         this.points.forEach(drawLabel);
 
-      let drawIcon = () => {
+      const drawIcon = () => {
         if (icon == null) return;
 
-        let iconCenter = {
+        const iconCenter = {
           x: icon.width / 2,
           y: icon.height / 2,
         };
-        let angle = Math.atan2(
+        const angle = Math.atan2(
           trailTip.y - trailTip2.y,
           trailTip.x - trailTip2.x
         );
@@ -662,7 +659,7 @@ const CanvasMap = (props) => {
           ...canvasPos(trailTip.x, trailTip.y)
         );
         this.ctx.rotate(angle);
-        let p = pos * 1.2;
+        const p = pos * 1.2;
         let scale = clamp(p < 0.5 ? interpolate(p * 2, 0, 1, easing.quad.out) : interpolate((p * 2) - 1, 1, 0, easing.quad.in));
         scale *= 0.7;
         this.ctx.scale(scale, scale);
@@ -672,22 +669,22 @@ const CanvasMap = (props) => {
         );
         this.ctx.restore();
       };
-      let checkForBufferUpdate = () => {
-        let zoomDelta = Math.abs(zoom - this.mapBufferLast.zoom);
-        let dx = Math.abs(mapSlice.x - this.mapBufferLast.pos.x);
-        let dy = Math.abs(mapSlice.y - this.mapBufferLast.pos.y);
+      const checkForBufferUpdate = () => {
+        const zoomDelta = Math.abs(zoom - this.mapBufferLast.zoom);
+        const dx = Math.abs(mapSlice.x - this.mapBufferLast.pos.x);
+        const dy = Math.abs(mapSlice.y - this.mapBufferLast.pos.y);
         let mapIndex = 0;
         while (zoom > this.map[mapIndex].scale && mapIndex < this.map.length - 1) {
           mapIndex++;
         }
-        let optimalScale = this.map[mapIndex].scale;
+        const optimalScale = this.map[mapIndex].scale;
 
 
         if (dx < this.mapBufferMargin / 3 && dy < this.mapBufferMargin / 3 && zoomDelta < 1 && !(zoom == optimalScale && this.mapBufferLast.zoom != optimalScale)) return;
 
         this.mapBufferLast = {
           zoom,
-          pos: { x: mapSlice.x, y: mapSlice.y },
+          pos: { x: mapSlice.x, y: mapSlice.y, },
         };
         updateMapBuffer();
       };
@@ -695,23 +692,24 @@ const CanvasMap = (props) => {
       let updatedBufferThisFrame = false;
       let updateMapBuffer = () => {
         updatedBufferThisFrame = true;
-        let buffer = this.drawMapBuffer(this.mapBufferCtx, mapSlice, zoom);
+        const buffer = this.drawMapBuffer(this.mapBufferCtx, mapSlice, zoom);
         this.mapBufferScale = buffer.scale;
         this.mapBufferOffset = buffer.offset;
         this.mapScale = buffer.mapScale;
       };
-      let drawMap = () => {
+      const drawMap = () => {
         checkForBufferUpdate();
 
         if (!updatedBufferThisFrame) {
-          let slice = {
+          const slice = {
             x: ((mapSlice.x * this.mapScale) - this.mapBufferOffset.x) / this.mapBufferScale,
             y: ((mapSlice.y * this.mapScale) - this.mapBufferOffset.y) / this.mapBufferScale,
             width: (mapSlice.width * this.mapScale) / this.mapBufferScale,
             height: (mapSlice.height * this.mapScale) / this.mapBufferScale,
           };
-          let target = {
-            x: 0, y: 0,
+          const target = {
+            x: 0,
+            y: 0,
             width: this.state.width,
             height: this.state.height,
           };
@@ -726,27 +724,26 @@ const CanvasMap = (props) => {
         }
       };
 
-      let localToGlobal = (v) =>
+      const localToGlobal = v =>
         mult(sub(v, cameraPos), zoom);
 
-      let cameraPath = this.cameraPath;
+      const cameraPath = this.cameraPath;
       let pos = this.state.pos;
-      let section = this.state.section;
-      let sectionIndex = this.state.sectionIndex;
-      let cameraSegment = this.state.cameraSegment;
+      const section = this.state.section;
+      const sectionIndex = this.state.sectionIndex;
+      const cameraSegment = this.state.cameraSegment;
       let trailSegment = this.state.trailSegment;
 
       let trailPos = interpolate(
         pos,
         trailSegment.start,
         trailSegment.end,
-        (v) => clamp(v * 1.2)
+        v => clamp(v * 1.2)
       );
       let trailTipIndex = Math.round(trailPos / this.trailSubdivisionSize);
       let trailTip = this.trailSubdivisions[clamp(trailTipIndex, this.trailSubdivisions.length - 1)];
       let trailTip2 = this.trailSubdivisions[clamp(trailTipIndex - 1, this.trailSubdivisions.length - 1)];
       let icon = this.sectionsIcons[sectionIndex];
-
 
 
       let mapSlice = this.getMapSliceAtPercent(
@@ -756,9 +753,9 @@ const CanvasMap = (props) => {
       let inverseZoom = 1 / zoom;
       let cameraPos = mapSlice.cameraPos;
 
-      let dpi = 1;// window.devicePixelRatio
+      const dpi = 1;// window.devicePixelRatio
 
-      let canvasPos = (x, y) => typeof x == 'object' ?
+      let canvasPos = (x, y) => typeof x === 'object' ?
         canvasPos(x.x, x.y) : [
           (x - mapSlice.x) * zoom,
           (y - mapSlice.y) * zoom,
@@ -778,9 +775,9 @@ const CanvasMap = (props) => {
 
       // this.ctx.restore()
 
-      let blendWorks = setCompositeOperation(this.ctx, 'screen');
+      const blendWorks = setCompositeOperation(this.ctx, 'screen');
 
-      let gradient = this.ctx.createLinearGradient(this.sectionsBounds[0].right, 0, this.sectionsBounds[0].right + 200, 0);
+      const gradient = this.ctx.createLinearGradient(this.sectionsBounds[0].right, 0, this.sectionsBounds[0].right + 200, 0);
       if (blendWorks) {
         gradient.addColorStop(0, 'rgba(185, 217, 151, 1)');
         gradient.addColorStop(1, 'rgba(185, 217, 151, 0)');
@@ -794,8 +791,7 @@ const CanvasMap = (props) => {
 
       this.ctx.fillRect(0, 0, this.sectionsBounds[0].right + 200, this.state.height);
 
-      if (blendWorks)
-        setCompositeOperation(this.ctx);
+      if (blendWorks) { setCompositeOperation(this.ctx); }
     },
     render() {
       this.renderMap();

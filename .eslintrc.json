@@ -4,6 +4,13 @@
   },
   "extends": "airbnb-base",
   "rules": {
+    "comma-dangle": ["error", {
+      "arrays": "always",
+      "objects": "always",
+      "imports": "always",
+      "exports": "always",
+      "functions": "never"
+    }],
     "no-underscore-dangle": ["error", { "allowAfterThis": true }],
     "no-confusing-arrow": ["error", { "allowParens": true }]
   }
