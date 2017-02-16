@@ -1,22 +1,23 @@
+const ClosureCompiler = require('google-closure-compiler-js').webpack;
 const path = require('path');
 
 module.exports = {
-  context: path.join(__dirname, '/src'),
-  entry: './index',
+  entry: [
+    path.join(__dirname, 'src', 'index.js')
+  ],
   output: {
-    filename: 'app.js',
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, 'dist'),
+    filename: 'app.js'
   },
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015'],
-        },
+  plugins: [
+    new ClosureCompiler({
+      options: {
+        languageIn: 'ECMASCRIPT6',
+        languageOut: 'ECMASCRIPT5',
+        compilationLevel: 'SIMPLE',
+        warningLevel: 'VERBOSE',
+        // rewritePolyfills: true,
       },
-    ],
-  },
+    })
+  ]
 };

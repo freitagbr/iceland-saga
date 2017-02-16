@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import canvasMap from './canvas-map';
 
 canvasMap({
