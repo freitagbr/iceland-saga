@@ -24,6 +24,6 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "gsap": "^1.19.1"
+    "gsap": "1.19.1"
   }
 }
