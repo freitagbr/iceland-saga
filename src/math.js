@@ -1,4 +1,4 @@
-import { likeNull, } from './utils';
+import { likeNull } from './utils';
 
 export const clamp = (v, _min = null, _max = null) => {
   let min = _min;

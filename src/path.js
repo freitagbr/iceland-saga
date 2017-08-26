@@ -1,9 +1,9 @@
-import { sub, } from './vector';
-import { clamp, } from './math';
+import { sub } from './vector';
+import { clamp } from './math';
 
 export const getPointAtLength = (path, length) => {
   const p = path.getPointAtLength(length);
-  return { x: p.x, y: p.y, };
+  return { x: p.x, y: p.y };
 };
 
 export const getLength = path => path.getTotalLength();

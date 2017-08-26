@@ -1,4 +1,4 @@
-import { likeNull, isString, } from './utils';
+import { likeNull, isString } from './utils';
 
 const isFunction = v => typeof v === 'function';
 const callIfFunction = (thisObj, f, ifNot = undefined) => {

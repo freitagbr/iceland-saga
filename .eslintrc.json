@@ -5,10 +5,10 @@
   "extends": "airbnb-base",
   "rules": {
     "comma-dangle": ["error", {
-      "arrays": "always",
-      "objects": "always",
-      "imports": "always",
-      "exports": "always",
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "only-multiline",
+      "exports": "only-multiline",
       "functions": "never"
     }],
     "no-underscore-dangle": ["error", { "allowAfterThis": true }],

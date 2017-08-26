@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 
-import { isNumber, isObject, } from './utils';
+import { isNumber, isObject } from './utils';
 
 const objNum = (op, obj, num) => Object.assign({},
   ...Object.keys(obj).map((i) => {
